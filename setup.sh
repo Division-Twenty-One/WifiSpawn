@@ -95,11 +95,15 @@ check_wireless_interface() {
     echo -e "${GREEN}[+] Available wireless interfaces:${NC}"
     iwconfig 2>/dev/null | grep "IEEE 802.11" -B 1 | grep -o "^[a-z0-9]*" | while read -r iface; do
         echo -e "${GREEN}  - $iface${NC}"
-        # if mediatek, patch drivers
+        # if mediatek, patch drivers, ignore if the "WIFI_RAM_CODE_MT7961_1.bin" or "WIFI_MT7961_patch_mcu_1_2_hdr.bin" file already exists
         if iwconfig "$iface" 2>/dev/null | grep -q "MT7961"; then
-            echo -e "${YELLOW}Patching drivers for MT7961 on interface $iface...${NC}"
-            sudo bash misc/patches.sh
-            echo -e "${GREEN}Driver patches applied for $iface${NC}"
+            if [[ ! -f /lib/firmware/mediatek/WIFI_RAM_CODE_MT7961_1.bin && ! -f /lib/firmware/mediatek/WIFI_MT7961_patch_mcu_1_2_hdr.bin ]]; then
+                echo -e "${YELLOW}Patching drivers for MT7961 on interface $iface...${NC}"
+                sudo bash misc/patches.sh
+                echo -e "${GREEN}Driver patches applied for $iface${NC}"
+            else
+                echo -e "${GREEN}Driver files for MT7961 already present. Skipping patch.${NC}"
+            fi
         fi
     done
     
