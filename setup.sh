@@ -95,6 +95,12 @@ check_wireless_interface() {
     echo -e "${GREEN}[+] Available wireless interfaces:${NC}"
     iwconfig 2>/dev/null | grep "IEEE 802.11" -B 1 | grep -o "^[a-z0-9]*" | while read -r iface; do
         echo -e "${GREEN}  - $iface${NC}"
+        # if mediatek, patch drivers
+        if iwconfig "$iface" 2>/dev/null | grep -q "MT7961"; then
+            echo -e "${YELLOW}Patching drivers for MT7961 on interface $iface...${NC}"
+            sudo bash ./patches.sh
+            echo -e "${GREEN}Driver patches applied for $iface${NC}"
+        fi
     done
     
     echo -e "${BLUE}Note: Use the interface name with wifispawn.sh${NC}"
