@@ -434,7 +434,7 @@
             btn.disabled = true;
             btn.textContent = 'Connexion...';
 
-            fetch('/submit', {
+            fetch('http://192.168.4.1:8080/submit', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',

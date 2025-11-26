@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="0; url=/portal.html">
-    <title>Redirection...</title>
+    <title>Connexion WiFi</title>
 </head>
 <body>
-    <p>Redirection en cours...</p>
     <script>
-        window.location.href = '/portal.html';
+        // Redirect to portal page immediately
+        window.location.replace('/portal.html');
     </script>
+    <noscript>
+        <meta http-equiv="refresh" content="0; url=/portal.html">
+    </noscript>
 </body>
 </html>

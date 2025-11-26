@@ -158,6 +158,13 @@ setup_directories() {
         cp "$PAGES_DIR/index.html" "$WEB_DIR/index.html"
     fi
     
+    # Copy captive portal detection files
+    for file in hotspot-detect.html generate_204.html ncsi.txt connecttest.txt success.txt; do
+        if [[ -f "$PAGES_DIR/$file" ]]; then
+            cp "$PAGES_DIR/$file" "$WEB_DIR/$file"
+        fi
+    done
+    
     # Copy additional files for google login if using google page
     if [[ "$PAGE_TYPE" == "google" && -f "$PAGES_DIR/google-login.html" ]]; then
         cp "$PAGES_DIR/google-login.html" "$WEB_DIR/google-login.html"
