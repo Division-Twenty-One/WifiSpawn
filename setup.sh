@@ -98,7 +98,7 @@ check_wireless_interface() {
         # if mediatek, patch drivers
         if iwconfig "$iface" 2>/dev/null | grep -q "MT7961"; then
             echo -e "${YELLOW}Patching drivers for MT7961 on interface $iface...${NC}"
-            sudo bash ./patches.sh
+            sudo bash misc/patches.sh
             echo -e "${GREEN}Driver patches applied for $iface${NC}"
         fi
     done
