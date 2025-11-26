@@ -27,14 +27,24 @@ AUTO_DETECT_INTERNET="false"
 REQUIRE_AUTH_FOR_INTERNET="false"
 
 # Directories
-# Get the real script directory (follow symlinks)
-SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
-SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
-PAGES_DIR="$SCRIPT_DIR/pages"
+# Get the real script directory (follow symlinks if needed)
+if [[ -L "${BASH_SOURCE[0]}" ]]; then
+    # Script is a symlink, follow it
+    SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null || readlink "${BASH_SOURCE[0]}")"
+    SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+else
+    # Script is not a symlink
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+fi
 
-# Fallback to /opt/wifispawn if pages not found in script dir
-if [[ ! -d "$PAGES_DIR" && -d "/opt/wifispawn/pages" ]]; then
+# Try to find pages directory
+if [[ -d "$SCRIPT_DIR/pages" ]]; then
+    PAGES_DIR="$SCRIPT_DIR/pages"
+elif [[ -d "/opt/wifispawn/pages" ]]; then
     PAGES_DIR="/opt/wifispawn/pages"
+else
+    # Last resort: check current directory
+    PAGES_DIR="$(pwd)/pages"
 fi
 
 WORK_DIR="/tmp/wifispawn"
@@ -285,13 +295,19 @@ setup_iptables() {
 start_web_services() {
     echo -e "${YELLOW}[+] Starting web services...${NC}"
     
-    # Copy Python server to work directory
-    if [[ -f "$SCRIPT_DIR/server.py" ]]; then
-        cp "$SCRIPT_DIR/server.py" "$WORK_DIR/server.py"
-    elif [[ -f "/opt/wifispawn/server.py" ]]; then
-        cp "/opt/wifispawn/server.py" "$WORK_DIR/server.py"
-    else
+    # Find and copy Python server to work directory
+    local server_found=false
+    for search_path in "$SCRIPT_DIR/server.py" "/opt/wifispawn/server.py" "$(pwd)/server.py"; do
+        if [[ -f "$search_path" ]]; then
+            cp "$search_path" "$WORK_DIR/server.py"
+            server_found=true
+            break
+        fi
+    done
+    
+    if [[ "$server_found" = false ]]; then
         echo -e "${RED}Error: server.py not found!${NC}"
+        echo -e "${YELLOW}Searched in: $SCRIPT_DIR, /opt/wifispawn, $(pwd)${NC}"
         exit 1
     fi
     
@@ -339,14 +355,21 @@ main() {
     setup_directories
     
     # Generate configuration files
-    if [[ -f "$SCRIPT_DIR/generate_configs.sh" ]]; then
-        "$SCRIPT_DIR/generate_configs.sh" "$SSID" "$INTERFACE" "$GATEWAY_IP" "$DHCP_RANGE"
-    elif [[ -f "/opt/wifispawn/generate_configs.sh" ]]; then
-        /opt/wifispawn/generate_configs.sh "$SSID" "$INTERFACE" "$GATEWAY_IP" "$DHCP_RANGE"
-    else
+    local config_script=""
+    for search_path in "$SCRIPT_DIR/generate_configs.sh" "/opt/wifispawn/generate_configs.sh" "$(pwd)/generate_configs.sh"; do
+        if [[ -f "$search_path" ]]; then
+            config_script="$search_path"
+            break
+        fi
+    done
+    
+    if [[ -z "$config_script" ]]; then
         echo -e "${RED}Error: generate_configs.sh not found!${NC}"
+        echo -e "${YELLOW}Searched in: $SCRIPT_DIR, /opt/wifispawn, $(pwd)${NC}"
         exit 1
     fi
+    
+    "$config_script" "$SSID" "$INTERFACE" "$GATEWAY_IP" "$DHCP_RANGE"
     
     setup_interface
     start_access_point
