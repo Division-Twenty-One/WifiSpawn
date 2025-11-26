@@ -135,9 +135,12 @@ create_sample_files() {
     
     local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     
-    # Copy portal.html to a safe location
-    mkdir -p /opt/wifispawn
-    cp "$script_dir/portal.html" /opt/wifispawn/
+    # Copy portal pages to a safe location
+    mkdir -p /opt/wifispawn/pages
+    if [[ -d "$script_dir/pages" ]]; then
+        cp -r "$script_dir/pages"/* /opt/wifispawn/pages/ 2>/dev/null || true
+        echo -e "${GREEN}[+] Portal pages copied to /opt/wifispawn/pages/${NC}"
+    fi
     
     # Create example usage file
     cat > "$script_dir/USAGE.md" << 'EOF'
