@@ -27,8 +27,16 @@ AUTO_DETECT_INTERNET="false"
 REQUIRE_AUTH_FOR_INTERNET="false"
 
 # Directories
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Get the real script directory (follow symlinks)
+SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
+SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
 PAGES_DIR="$SCRIPT_DIR/pages"
+
+# Fallback to /opt/wifispawn if pages not found in script dir
+if [[ ! -d "$PAGES_DIR" && -d "/opt/wifispawn/pages" ]]; then
+    PAGES_DIR="/opt/wifispawn/pages"
+fi
+
 WORK_DIR="/tmp/wifispawn"
 WEB_DIR="$WORK_DIR/www"
 LOGS_DIR="$WORK_DIR/logs"
@@ -278,7 +286,14 @@ start_web_services() {
     echo -e "${YELLOW}[+] Starting web services...${NC}"
     
     # Copy Python server to work directory
-    cp "$SCRIPT_DIR/server.py" "$WORK_DIR/server.py"
+    if [[ -f "$SCRIPT_DIR/server.py" ]]; then
+        cp "$SCRIPT_DIR/server.py" "$WORK_DIR/server.py"
+    elif [[ -f "/opt/wifispawn/server.py" ]]; then
+        cp "/opt/wifispawn/server.py" "$WORK_DIR/server.py"
+    else
+        echo -e "${RED}Error: server.py not found!${NC}"
+        exit 1
+    fi
     
     # Start credentials server
     cd "$WORK_DIR"
@@ -324,7 +339,14 @@ main() {
     setup_directories
     
     # Generate configuration files
-    ./generate_configs.sh "$SSID" "$INTERFACE" "$GATEWAY_IP" "$DHCP_RANGE"
+    if [[ -f "$SCRIPT_DIR/generate_configs.sh" ]]; then
+        "$SCRIPT_DIR/generate_configs.sh" "$SSID" "$INTERFACE" "$GATEWAY_IP" "$DHCP_RANGE"
+    elif [[ -f "/opt/wifispawn/generate_configs.sh" ]]; then
+        /opt/wifispawn/generate_configs.sh "$SSID" "$INTERFACE" "$GATEWAY_IP" "$DHCP_RANGE"
+    else
+        echo -e "${RED}Error: generate_configs.sh not found!${NC}"
+        exit 1
+    fi
     
     setup_interface
     start_access_point

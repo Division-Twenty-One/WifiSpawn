@@ -142,6 +142,18 @@ create_sample_files() {
         echo -e "${GREEN}[+] Portal pages copied to /opt/wifispawn/pages/${NC}"
     fi
     
+    # Copy server.py and generate_configs.sh
+    if [[ -f "$script_dir/server.py" ]]; then
+        cp "$script_dir/server.py" /opt/wifispawn/server.py
+        echo -e "${GREEN}[+] server.py copied to /opt/wifispawn/${NC}"
+    fi
+    
+    if [[ -f "$script_dir/generate_configs.sh" ]]; then
+        cp "$script_dir/generate_configs.sh" /opt/wifispawn/generate_configs.sh
+        chmod +x /opt/wifispawn/generate_configs.sh
+        echo -e "${GREEN}[+] generate_configs.sh copied to /opt/wifispawn/${NC}"
+    fi
+    
     # Create example usage file
     cat > "$script_dir/USAGE.md" << 'EOF'
 # WiFi Spawn Usage
