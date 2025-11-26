@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel WiFi Access</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 8px;
+            padding: 50px 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            border-top: 4px solid #d4af37;
+        }
+        
+        .logo {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 12px;
+            font-size: 26px;
+            font-weight: 400;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            margin-bottom: 35px;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #34495e;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 15px 18px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            font-family: 'Georgia', serif;
+        }
+        
+        input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            background: #d4af37;
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .submit-btn:hover {
+            background: #b8941f;
+        }
+        
+        .terms {
+            margin-top: 25px;
+            font-size: 12px;
+            color: #95a5a6;
+            line-height: 1.5;
+            font-style: italic;
+        }
+        
+        .loading {
+            display: none;
+            margin-top: 25px;
+        }
+        
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #d4af37;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error {
+            background: #fadbd8;
+            color: #c0392b;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 25px;
+            display: none;
+            font-size: 14px;
+            border-left: 4px solid #c0392b;
+        }
+        
+        .hotel-info {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            font-size: 13px;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🏨</div>
+        <h1>Grand Hotel WiFi</h1>
+        <p class="subtitle">Welcome, valued guest. Please authenticate to access complimentary internet services.</p>
+        
+        <div class="hotel-info">
+            <strong>WiFi Information:</strong><br>
+            • Free high-speed internet for all guests<br>
+            • Available 24/7 throughout the property<br>
+            • Guest login required for security
+        </div>
+        
+        <div class="error" id="errorMsg">
+            Invalid room credentials. Please check your details or contact front desk.
+        </div>
+        
+        <form id="loginForm" method="POST" action="/submit">
+            <div class="form-group">
+                <label for="username">Room Number or Guest Email</label>
+                <input type="text" id="username" name="username" required 
+                       placeholder="e.g. 1205 or guest@email.com">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Last Name / Access Code</label>
+                <input type="password" id="password" name="password" required 
+                       placeholder="Enter your last name">
+            </div>
+            
+            <button type="submit" class="submit-btn" id="submitBtn">
+                Access Hotel WiFi
+            </button>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p style="margin-top: 15px; color: #7f8c8d;">Verifying guest credentials...</p>
+            </div>
+            
+            <p class="terms">
+                WiFi usage is subject to hotel policies and acceptable use guidelines. 
+                Connection logs are maintained for security purposes as per hotel policy.
+            </p>
+        </form>
+    </div>
+    
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const submitBtn = document.getElementById('submitBtn');
+            const loading = document.getElementById('loading');
+            const errorMsg = document.getElementById('errorMsg');
+            
+            errorMsg.style.display = 'none';
+            submitBtn.style.display = 'none';
+            loading.style.display = 'block';
+            
+            fetch('/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = data.redirect || 'http://google.com';
+                } else {
+                    loading.style.display = 'none';
+                    submitBtn.style.display = 'block';
+                    errorMsg.style.display = 'block';
+                    document.getElementById('password').value = '';
+                }
+            })
+            .catch(error => {
+                loading.style.display = 'none';
+                submitBtn.style.display = 'block';
+                errorMsg.style.display = 'block';
+                document.getElementById('password').value = '';
+            });
+        });
+        
+        window.addEventListener('load', function() {
+            document.getElementById('username').focus();
+        });
+    </script>
+</body>
+</html>
