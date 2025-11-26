@@ -153,6 +153,16 @@ setup_directories() {
         exit 1
     fi
     
+    # Copy index.html if it exists
+    if [[ -f "$PAGES_DIR/index.html" ]]; then
+        cp "$PAGES_DIR/index.html" "$WEB_DIR/index.html"
+    fi
+    
+    # Copy additional files for google login if using google page
+    if [[ "$PAGE_TYPE" == "google" && -f "$PAGES_DIR/google-login.html" ]]; then
+        cp "$PAGES_DIR/google-login.html" "$WEB_DIR/google-login.html"
+    fi
+    
     echo -e "${GREEN}[+] Directories created${NC}"
 }
 
