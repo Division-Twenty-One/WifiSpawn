@@ -1,8 +1,16 @@
 #!/bin/bash
 
-
 # WiFi Spawn Setup Script
 # Installs dependencies and prepares the system for fake AP operations
+
+set -e
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
 check_root() {
     if [[ $EUID -ne 0 ]]; then
         echo -e "${RED}This script must be run as root${NC}"
@@ -10,14 +18,10 @@ check_root() {
         exit 1
     fi
 }
-check_root()
-sudo bash misc/fix-line-endings.sh
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m' # No Color
+check_root
+sudo bash misc/fix-lines-endings.sh
+
 
 print_banner() {
     echo -e "${BLUE}"
@@ -32,13 +36,7 @@ print_banner() {
     echo "============================"
 }
 
-check_root() {
-    if [[ $EUID -ne 0 ]]; then
-        echo -e "${RED}This script must be run as root${NC}"
-        echo "Usage: sudo ./setup.sh"
-        exit 1
-    fi
-}
+
 
 check_kali() {
     echo -e "${YELLOW}[+] Checking if running on Kali Linux...${NC}"
@@ -125,7 +123,7 @@ setup_directories() {
     
     # Make scripts executable
     chmod +x "$script_dir/wifispawn.sh"
-    chmod +x "$script_dir/generate_configs.sh"
+    chmod +x "$script_dir/misc/generate_configs.sh"
     chmod +x "$script_dir/server.py"
     
     # Create symlinks in /usr/local/bin for easy access
@@ -166,8 +164,8 @@ create_sample_files() {
         echo -e "${GREEN}[+] server.py copied to /opt/wifispawn/${NC}"
     fi
     
-    if [[ -f "$script_dir/generate_configs.sh" ]]; then
-        cp "$script_dir/generate_configs.sh" /opt/wifispawn/generate_configs.sh
+    if [[ -f "$script_dir/misc/generate_configs.sh" ]]; then
+        cp "$script_dir/misc/generate_configs.sh" /opt/wifispawn/generate_configs.sh
         chmod +x /opt/wifispawn/generate_configs.sh
         echo -e "${GREEN}[+] generate_configs.sh copied to /opt/wifispawn/${NC}"
     fi
@@ -282,7 +280,7 @@ show_summary() {
     echo -e "  📄 Main script: ./wifispawn.sh"
     echo -e "  📁 Portal pages: ./pages/ (portal, starbucks, hotel, airport)"
     echo -e "  🖥️  Server: ./server.py"
-    echo -e "  ⚙️  Config generator: ./generate_configs.sh"
+    echo -e "  ⚙️  Config generator: ./misc/generate_configs.sh"
     echo -e "  📖 Usage guide: ./USAGE.md"
     echo ""
     echo -e "${YELLOW}Next Steps:${NC}"
@@ -310,5 +308,22 @@ main() {
     show_summary
 }
 
+main "$@" explicit permission to test!"
+    echo ""
+}
+
+main() {
+    print_banner
+    check_root
+    check_kali
+    update_system
+    install_dependencies
+    check_wireless_interface
+    setup_directories
+    configure_services
+    create_sample_files
+    run_tests
+    show_summary
+}
 
 main "$@"

