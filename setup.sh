@@ -1,9 +1,17 @@
 #!/bin/bash
 
+
 # WiFi Spawn Setup Script
 # Installs dependencies and prepares the system for fake AP operations
-
-set -e
+check_root() {
+    if [[ $EUID -ne 0 ]]; then
+        echo -e "${RED}This script must be run as root${NC}"
+        echo "Usage: sudo ./setup.sh"
+        exit 1
+    fi
+}
+check_root()
+sudo bash misc/fix-line-endings.sh
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -301,5 +309,6 @@ main() {
     run_tests
     show_summary
 }
+
 
 main "$@"
