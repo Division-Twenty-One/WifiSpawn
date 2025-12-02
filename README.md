@@ -11,10 +11,10 @@ Professional-grade WiFi penetration testing tool for credential harvesting and s
   - ✅ Recommended: **Alfa AWUS036AXML** (MT7961 chipset)
   - ✅ Alfa AWUS036ACH, AWUS036AC
   - ✅ TP-Link TL-WN722N v1/v2
-  - ⚠️ Raspberry Pi: Model 4 or newer with compatible external adapter
+  - ℹ️ You can use the built-in antenna on Raspberry Pi 4 or newer.
 
 ### **Operating System**
-- **Kali Linux** (recommended) or Debian-based distro
+- **Kali Linux** : Tested on 2025.3
 - Root/sudo access required
 
 ### **Dependencies**
@@ -24,7 +24,6 @@ Professional-grade WiFi penetration testing tool for credential harvesting and s
 - `python3` - Web server and credential logging
 - `iptables` - Traffic redirection
 - `iw` - Wireless configuration
-
 
 ## **Installation**
 
