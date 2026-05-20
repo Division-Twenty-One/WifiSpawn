@@ -20,7 +20,7 @@ check_root() {
 }
 
 check_root
-sudo bash misc/fix-lines-endings.sh
+sudo bash misc/fix-line-endings.sh
 
 
 print_banner() {
